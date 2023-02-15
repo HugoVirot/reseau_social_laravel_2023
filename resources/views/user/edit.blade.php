@@ -1,15 +1,16 @@
-@extends ('layouts.app')
+@extends ('layouts/app')
 
 @section('title')
-    Mon compte
+    Réseau Social Laravel - Mon compte
 @endsection
 
 @section('content')
-    <main class="container">
+    <div class="container">
 
         <h1>Mon compte</h1>
 
         <h3 class="pb-3">Modifier mes informations </h3>
+        
         <div class="row">
 
             <form class="col-4 mx-auto" action="{{ route('users.update', $user) }}" method="POST">
@@ -24,12 +25,21 @@
 
                 <div class="form-group">
                     <label for="image">Nouvelle image</label>
-                    <input required type="text" class="form-control" placeholder="modifier" name="image"
+                    <input type="text" class="form-control" placeholder="modifier" name="image"
                         value="{{ $user->image }}" id="image">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Valider</button>
             </form>
         </div>
-    </main>
+
+        <div class="container text-center mt-5">
+            <form action="{{ route('users.destroy', $user) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Supprimer le compte</button>
+            </form>
+        </div>
+
+    </div>
 @endsection

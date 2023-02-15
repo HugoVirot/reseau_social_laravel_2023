@@ -13,12 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// ************************** page de connexion / inscription ******************************
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+
+
+// *********************** ACCUEIL (home.blade.php)/ liste des quacks**************************
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
+
+
+// ********************************** routes AUTHENTIFICATION (Laravel Ui) *******************************
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// ********************************** route resource USERS *******************************
 
 Route::resource('/users', App\Http\Controllers\UserController::class)->except('index', 'create', 'store');

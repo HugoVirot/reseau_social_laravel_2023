@@ -4,40 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
+   
     /**
      * Display the specified resource.
      *
@@ -57,6 +28,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        // [ 'nom variable dans vue ' => variable correspondante ]
         return view('user/edit', ['user' => $user]);
     }
 
@@ -97,11 +69,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        // on vérifie que c'esrt bien l'utilisateur connecté qui fait la demande de suppression
+        // on vérifie que c'est bien l'utilisateur connecté qui fait la demande de suppression
         // (les id doivent être identiques)
         if (Auth::user()->id == $user->id) {
             $user->delete();                    // on réalise la suppression
             return redirect()->route('index')->with('message', 'Le compte a bien été supprimé');
+            
         } else {
             return redirect()->back()->withErrors(['erreur' => 'suppression du compte impossible']);
         }
