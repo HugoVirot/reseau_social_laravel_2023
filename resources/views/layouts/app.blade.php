@@ -20,7 +20,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md bg-primary shadow-sm" data-bs-theme="dark">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -77,6 +77,15 @@
                         @endguest
                     </ul>
                 </div>
+                @auth
+                    <form class="row mt-2 me-2" action="{{ route('search') }}" method="get">
+                        <div class="input-group">
+                            <input type="search" class="form-control" name="search"
+                                placeholder="Rechercher un message">
+                                <button type="submit" class="btn btn-warning">Go !</button>
+                        </div>
+                    </form>
+                @endauth
             </div>
         </nav>
 

@@ -9,7 +9,17 @@ class Post extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'content', 'image', 'tags', 'user_id'
+    ];
+
     // je charge automatiquement l'utilisateur à chaque fois que je récupère un message
+    // EAGER LOADING automatique
     protected $with = ['user'];
 
     // nom de la fonction au singulier car 1 seul user en relation

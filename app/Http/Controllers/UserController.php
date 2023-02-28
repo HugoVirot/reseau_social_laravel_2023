@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-   
+
     /**
      * Display the specified resource.
      *
@@ -70,13 +70,18 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         // on vérifie que c'est bien l'utilisateur connecté qui fait la demande de suppression
-        // (les id doivent être identiques)
+        // (les id doivent être identiques) 
         if (Auth::user()->id == $user->id) {
-            $user->delete();                    // on réalise la suppression
+            $user->delete();
             return redirect()->route('index')->with('message', 'Le compte a bien été supprimé');
-            
-        } else {
+
+        // si c'est l'admin => suppression possible, redirection sur back-office
+        } else if (Auth::user()->role_id == "2") {
+            $user->delete();
+            return redirect()->route('admin')->with('message', 'Le compte a bien été supprimé');
+
+        // ni l'un ni l'autre : suppression impossible
+        } else
             return redirect()->back()->withErrors(['erreur' => 'suppression du compte impossible']);
-        }
     }
 }
